@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { PageProps } from './../../.next/types/app/layout'
 import Image from 'next/image'
 import { buttonVariants } from './ui/button'
 
