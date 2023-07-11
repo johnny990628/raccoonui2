@@ -16,7 +16,13 @@ const Navbar = () => {
             <div className="container max-w-7xl h-full mx-auto flex item-center justify-between gap-2">
                 <div className="flex item-center gap-4">
                     <Link href="/" className="flex gap-2 items-center">
-                        <Image src="/logo.svg" alt="logo" width={20} height={20} className="h-8 w-8 sm:h-6 sm:w-6" />
+                        <Image
+                            src="/logo.svg"
+                            alt="logo"
+                            width={20}
+                            height={20}
+                            className="bg-slate-100 rounded-sm p-1 h-8 w-8 sm:h-6 sm:w-6"
+                        />
                         <p className="hidden  text-lg font-medium md:block">RACCOON</p>
                     </Link>
 
