@@ -17,7 +17,7 @@ export default function RootLayout({ children, authModal }) {
                 <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                     <Navbar />
                     {authModal}
-                    <div className="container max-w-7xl mx-auto h-full pt-12">{children}</div>
+                    <div className="container max-w-7xl mx-auto h-full pt-14">{children}</div>
                 </ThemeProvider>
             </body>
         </html>
