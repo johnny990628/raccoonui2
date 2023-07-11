@@ -83,21 +83,21 @@ const getArrayWithPagination = (originalArray, limit, offset) => {
 }
 
 const asyncGetSeries = async studyUID => {
-    const fetchURL = `http://tws-raccoon.luckypig.net:8081/dicom-web/studies/${studyUID}/series`
+    const fetchURL = `${process.env.PACS_URL}/dicom-web/studies/${studyUID}/series`
     const res = await fetch(fetchURL)
     const response = await res.json()
     return response
 }
 
 const asyncGetInstances = async (studyUID, seriesUID) => {
-    const fetchURL = `http://tws-raccoon.luckypig.net:8081/dicom-web/studies/${studyUID}/series/${seriesUID}/instances`
+    const fetchURL = `${process.env.PACS_URL}/dicom-web/studies/${studyUID}/series/${seriesUID}/instances`
     const res = await fetch(fetchURL)
     const response = await res.json()
     return response
 }
 
 const getPacsesStudies = async queryParams => {
-    const fetchURL = `http://tws-raccoon.luckypig.net:8081/dicom-web/studies`
+    const fetchURL = `${process.env.PACS_URL}/dicom-web/studies`
 
     const res = await fetch(fetchURL, {
         params: queryParams,
@@ -174,7 +174,7 @@ export async function GET(request) {
     const data = wholePacsStudiesInstances.map(item => {
         return {
             ...item,
-            imageURL: `http://tws-raccoon.luckypig.net:8081/api/dicom/wado?requestType=WADO&studyUID=${item.StudyInstanceUID}&seriesUID=${item.SeriesInstanceUID}&objectUID=${item.SOPInstanceUID}&contentType=image/jpeg`,
+            imageURL: `${process.env.IMAGE_URL}?requestType=WADO&studyUID=${item.StudyInstanceUID}&seriesUID=${item.SeriesInstanceUID}&objectUID=${item.SOPInstanceUID}&contentType=image/jpeg`,
         }
     })
 

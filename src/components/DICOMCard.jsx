@@ -4,7 +4,7 @@ import { Button } from './ui/button'
 
 export default async function DICOMCard({ dicom }) {
     return (
-        <Card className="hover:bg-zinc-900 cursor-pointer">
+        <Card className="hover:bg-zinc-900">
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                     <p className="text-md">{dicom.PatientName?.Alphabetic || 'No Name'}</p>
