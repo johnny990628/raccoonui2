@@ -83,21 +83,21 @@ const getArrayWithPagination = (originalArray, limit, offset) => {
 }
 
 const asyncGetSeries = async studyUID => {
-    const fetchURL = `${process.env.PACS_URL}/dicom-web/studies/${studyUID}/series`
+    const fetchURL = `${process.env.PACS_URL}/${studyUID}/series`
     const res = await fetch(fetchURL)
     const response = await res.json()
     return response
 }
 
 const asyncGetInstances = async (studyUID, seriesUID) => {
-    const fetchURL = `${process.env.PACS_URL}/dicom-web/studies/${studyUID}/series/${seriesUID}/instances`
+    const fetchURL = `${process.env.PACS_URL}/${studyUID}/series/${seriesUID}/instances`
     const res = await fetch(fetchURL)
     const response = await res.json()
     return response
 }
 
 const getPacsesStudies = async queryParams => {
-    const fetchURL = `${process.env.PACS_URL}/dicom-web/studies`
+    const fetchURL = `${process.env.PACS_URL}`
 
     const res = await fetch(fetchURL, {
         params: queryParams,
@@ -160,23 +160,27 @@ const getWolePacsStudiesInstances = async wholePacsStudies => {
 }
 
 export async function GET(request) {
-    const response = await getPacsesStudies()
+    try {
+        const response = await getPacsesStudies()
 
-    //分頁
-    const arrayWithPaginationData = getArrayWithPagination(response, 10, 0)
+        //分頁
+        const arrayWithPaginationData = getArrayWithPagination(response, 10, 0)
 
-    //獲取所有pacs的study的series
-    const wholePacsStudies = await getWolePacsStudies(arrayWithPaginationData)
+        //獲取所有pacs的study的series
+        const wholePacsStudies = await getWolePacsStudies(arrayWithPaginationData)
 
-    //獲取所有pacs的study的series的instances
-    const wholePacsStudiesInstances = await getWolePacsStudiesInstances(wholePacsStudies)
+        //獲取所有pacs的study的series的instances
+        const wholePacsStudiesInstances = await getWolePacsStudiesInstances(wholePacsStudies)
 
-    const data = wholePacsStudiesInstances.map(item => {
-        return {
-            ...item,
-            imageURL: `${process.env.IMAGE_URL}?requestType=WADO&studyUID=${item.StudyInstanceUID}&seriesUID=${item.SeriesInstanceUID}&objectUID=${item.SOPInstanceUID}&contentType=image/jpeg`,
-        }
-    })
+        const data = wholePacsStudiesInstances.map(item => {
+            return {
+                ...item,
+                imageURL: `${process.env.IMAGE_URL}?requestType=WADO&studyUID=${item.StudyInstanceUID}&seriesUID=${item.SeriesInstanceUID}&objectUID=${item.SOPInstanceUID}&contentType=image/jpeg`,
+            }
+        })
 
-    return NextResponse.json(data)
+        return NextResponse.json(data)
+    } catch (err) {
+        console.log(err)
+    }
 }
