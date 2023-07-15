@@ -1,11 +1,11 @@
 import { combineDataWithImage, combineDataWithInstance, combineDataWithSeries, getStudies } from '@/functions/dicom/dicom'
 import { NextResponse } from 'next/server'
 
-export async function GET(request) {
+export async function GET(req, { params }) {
     try {
-        const studyData = await getStudies()
-        //分頁
-        // const arrayWithPaginationData = getArrayWithPagination(response, 10, 0)
+        const { studyID } = params
+
+        const studyData = await getStudies({ StudyInstanceUID: studyID })
 
         const seriesData = await combineDataWithSeries(studyData)
 
@@ -13,7 +13,7 @@ export async function GET(request) {
 
         const result = await combineDataWithImage(instanceData)
 
-        return NextResponse.json(result)
+        return NextResponse.json(result[0])
     } catch (err) {
         console.log(err)
     }
