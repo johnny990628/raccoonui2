@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 export default async function DICOMCard({ dicom }) {
     return (
-        <Card className="hover:bg-zinc-900">
+        <Card className="hover:bg-accent">
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                     <div className="text-md">{dicom.PatientName?.Alphabetic || 'No Name'}</div>

@@ -26,29 +26,36 @@ const page = async ({ params }) => {
     const dicom = await getData(studyID)
 
     return (
-        <div className="grid grid-cols-2 gap-4">
-            <div className="h-full">
-                <Image src={dicom.imageURL} alt="dicom" width={600} height={600} />
+        <div>
+            <div className="w-full mb-4">
+                <Link href="/image-management" className={buttonVariants({ variant: 'ghost' })}>
+                    {'< Back'}
+                </Link>
             </div>
-            <div>
-                <Card className="p-4">
-                    <CardContent className="grid gap-4">
-                        <Row title="PatientName" content={dicom.PatientName?.Alphabetic} />
-                        <Row title="PatientID" content={dicom.PatientID} />
-                        <Row title="PatientBirthDate" content={dicom.PatientBirthDate} />
-                        <Row title="PatientSex" content={dicom.PatientSex} />
-                        <Row title="StudyDate" content={new Date(dicom.StudyDate).toLocaleDateString()} />
-                    </CardContent>
-                    <CardFooter>
-                        <Link
-                            href={`${process.env.BLUELIGHT_URL}?StudyInstanceUID=${dicom.StudyInstanceUID}`}
-                            target="_blank"
-                            className={cn(buttonVariants(), 'w-full')}
-                        >
-                            Open the viewer
-                        </Link>
-                    </CardFooter>
-                </Card>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="h-full">
+                    <Image src={dicom.imageURL} alt="dicom" width={600} height={600} />
+                </div>
+                <div>
+                    <Card className="p-4">
+                        <CardContent className="grid gap-4">
+                            <Row title="PatientName" content={dicom.PatientName?.Alphabetic} />
+                            <Row title="PatientID" content={dicom.PatientID} />
+                            <Row title="PatientBirthDate" content={dicom.PatientBirthDate} />
+                            <Row title="PatientSex" content={dicom.PatientSex} />
+                            <Row title="StudyDate" content={new Date(dicom.StudyDate).toLocaleDateString()} />
+                        </CardContent>
+                        <CardFooter>
+                            <Link
+                                href={`${process.env.BLUELIGHT_URL}?StudyInstanceUID=${dicom.StudyInstanceUID}`}
+                                target="_blank"
+                                className={cn(buttonVariants(), 'w-full')}
+                            >
+                                Open the viewer
+                            </Link>
+                        </CardFooter>
+                    </Card>
+                </div>
             </div>
         </div>
     )
