@@ -9,19 +9,25 @@ export default async function DICOMCard({ dicom }) {
         <Card className="hover:bg-zinc-900">
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                    <p className="text-md">{dicom.PatientName?.Alphabetic || 'No Name'}</p>
-                    <p className="text-sm text-muted-foreground">{new Date(dicom.StudyDate).toLocaleDateString()}</p>
+                    <div className="text-md">{dicom.PatientName?.Alphabetic || 'No Name'}</div>
+                    <div className="text-sm text-muted-foreground">{new Date(dicom.StudyDate).toLocaleDateString()}</div>
                 </CardTitle>
                 <CardDescription className="flex flex-col">
-                    <p>ID : {dicom.PatientID}</p>
-                    <p>AN : {dicom.AccessionNumber || null}</p>
+                    <div>ID : {dicom.PatientID}</div>
+                    <div>AN : {dicom.AccessionNumber || null}</div>
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center">
                 <Image src={dicom.imageURL} alt="dicom" width={100} height={100} className="object-cover h-60 w-60" />
             </CardContent>
             <CardFooter className="mt-4 flex items-center gap-2">
-                <Button className="w-full bg-slate-900 text-slate-50 hover:bg-slate-800">Viewer</Button>
+                <Link
+                    href={`${process.env.BLUELIGHT_URL}?StudyInstanceUID=${dicom.StudyInstanceUID}`}
+                    target="_blank"
+                    className={cn(buttonVariants(), 'w-full bg-slate-900 text-slate-50 hover:bg-slate-800')}
+                >
+                    Viewer
+                </Link>
                 <Link href={`/dicom/${dicom.StudyInstanceUID}`} className={cn(buttonVariants(), 'w-full')}>
                     Detail
                 </Link>

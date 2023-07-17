@@ -40,7 +40,11 @@ const page = async ({ params }) => {
                         <Row title="StudyDate" content={new Date(dicom.StudyDate).toLocaleDateString()} />
                     </CardContent>
                     <CardFooter>
-                        <Link href="/" className={cn(buttonVariants(), 'w-full')}>
+                        <Link
+                            href={`${process.env.BLUELIGHT_URL}?StudyInstanceUID=${dicom.StudyInstanceUID}`}
+                            target="_blank"
+                            className={cn(buttonVariants(), 'w-full')}
+                        >
                             Open the viewer
                         </Link>
                     </CardFooter>
