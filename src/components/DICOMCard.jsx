@@ -15,6 +15,7 @@ export default async function DICOMCard({ dicom }) {
                 <CardDescription className="flex flex-col">
                     <div>ID : {dicom.PatientID}</div>
                     <div>AN : {dicom.AccessionNumber || null}</div>
+                    <div> {`Series : ${dicom.series.length}`}</div>
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center">

@@ -1,3 +1,4 @@
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
@@ -44,6 +45,34 @@ const page = async ({ params }) => {
                             <Row title="PatientBirthDate" content={dicom.PatientBirthDate} />
                             <Row title="PatientSex" content={dicom.PatientSex} />
                             <Row title="StudyDate" content={new Date(dicom.StudyDate).toLocaleDateString()} />
+                            <Accordion type="single" collapsible className="w-full">
+                                <AccordionItem value="item-1">
+                                    <AccordionTrigger className="text-lg font-medium">Series</AccordionTrigger>
+                                    <AccordionContent>
+                                        {dicom.series.map(series => {
+                                            return (
+                                                <div key={series.SeriesInstanceUID} className="mb-4 pb-4 border-b-2">
+                                                    <div>SeriesInstanceUID : {series.SeriesInstanceUID}</div>
+                                                    <div>Number : {series.Number}</div>
+                                                    <div>SeriesDescription : {series.SeriesDescription}</div>
+                                                    <div>Modality : {series.Modality}</div>
+                                                    <div>Instances : {series.instances.length}</div>
+                                                    <Link
+                                                        href={`${process.env.BLUELIGHT_URL}?StudyInstanceUID=${dicom.StudyInstanceUID}&SeriesInstanceUID=${series.SeriesInstanceUID}`}
+                                                        target="_blank"
+                                                        className={cn(
+                                                            buttonVariants(),
+                                                            'w-full mt-2  bg-slate-900 text-slate-50 hover:bg-slate-800'
+                                                        )}
+                                                    >
+                                                        Open series in viewer
+                                                    </Link>
+                                                </div>
+                                            )
+                                        })}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            </Accordion>
                         </CardContent>
                         <CardFooter>
                             <Link
