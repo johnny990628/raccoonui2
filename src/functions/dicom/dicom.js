@@ -61,6 +61,10 @@ export const dicomTag = {
     ],
 }
 
+export const filterStudies = ({ studies, limit, page }) => {
+    return studies.slice((page - 1) * limit, page * limit)
+}
+
 export const reduceData = ({ header, item }) => {
     const afterFormSeries = dicomTag[header].reduce((accumulator, currentValue) => {
         const value = item[currentValue.tag]?.Value?.[0] // 添加属性存在性的检查

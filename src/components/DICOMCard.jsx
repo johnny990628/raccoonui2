@@ -4,7 +4,7 @@ import { Button, buttonVariants } from './ui/button'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-export default async function DICOMCard({ dicom }) {
+export default function DICOMCard({ dicom }) {
     return (
         <Card className="hover:bg-accent">
             <CardHeader>

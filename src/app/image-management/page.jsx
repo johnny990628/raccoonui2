@@ -1,7 +1,16 @@
-import DICOMCard from '@/components/DICOMCard'
+import ImageList from '@/components/ImageList'
 
-const getData = async () => {
-    const res = await fetch(process.env.SERVER_URL + '/api/dicom')
+const getData = async (page = 1) => {
+    'use server'
+    const res = await fetch(
+        process.env.SERVER_URL +
+            '/api/dicom' +
+            '?' +
+            new URLSearchParams({
+                limit: 1,
+                page,
+            }).toString()
+    )
 
     if (!res.ok) throw new Error('Failed to fetch data')
 
@@ -11,11 +20,7 @@ export default async function ImageManagement() {
     const dicoms = await getData()
     return (
         <div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {dicoms.map(dicom => (
-                    <DICOMCard key={dicom.StudyInstanceUID} dicom={dicom} />
-                ))}
-            </div>
+            <ImageList initialDicoms={dicoms} getData={getData} />
         </div>
     )
 }
