@@ -99,9 +99,9 @@ export const apiGetInstances = async (studyUID, seriesUID) => {
 }
 
 export const getStudies = async queryParams => {
-    const fetchURL = `${process.env.PACS_URL}`
+    const fetchURL = queryParams ? process.env.PACS_URL + '?' + new URLSearchParams(queryParams) : process.env.PACS_URL
 
-    const res = queryParams ? await fetch(fetchURL + '?' + new URLSearchParams(queryParams)) : await fetch(fetchURL)
+    const res = await fetch(fetchURL)
     const response = await res.json()
 
     const results = response.map(item => {

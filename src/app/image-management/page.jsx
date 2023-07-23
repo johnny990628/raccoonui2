@@ -7,7 +7,7 @@ const getData = async (page = 1) => {
             '/api/dicom' +
             '?' +
             new URLSearchParams({
-                limit: 1,
+                limit: 4,
                 page,
             }).toString()
     )
