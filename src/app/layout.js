@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Navbar from '@/components/Navbar'
+import { Providers } from '@/redux/Provider'
 import { ThemeProvider } from '@/components/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -14,11 +15,13 @@ export default function RootLayout({ children, authModal }) {
     return (
         <html lang="en" className={inter.className}>
             <body className="min-h-screen pt-12">
-                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-                    <Navbar />
-                    {authModal}
-                    <div className="container max-w-7xl mx-auto h-full pt-14">{children}</div>
-                </ThemeProvider>
+                <Providers>
+                    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                        <Navbar />
+                        {authModal}
+                        <div className="container max-w-7xl mx-auto h-full pt-14">{children}</div>
+                    </ThemeProvider>
+                </Providers>
             </body>
         </html>
     )

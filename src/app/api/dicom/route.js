@@ -5,10 +5,16 @@ export async function GET(req, res) {
     try {
         const limit = req.nextUrl.searchParams.get('limit')
         const page = req.nextUrl.searchParams.get('page')
+        const PatientID = req.nextUrl.searchParams.get('PatientID') || ''
+        const PatientName = req.nextUrl.searchParams.get('PatientName') || ''
+        const Modality = req.nextUrl.searchParams.get('Modality') || ''
+        const Identifier = req.nextUrl.searchParams.get('Identifier') || ''
 
-        const studyData = await getStudies()
-        //分頁
-        const filteredData = filterStudies({ studies: studyData, limit, page })
+        const searchQuery = { PatientID, PatientName, Modality, Identifier }
+
+        const studyData = await getStudies(searchQuery)
+
+        const filteredData = filterStudies({ studies: studyData, limit, page, searchQuery })
 
         const seriesData = await combineDataWithSeries(filteredData)
 

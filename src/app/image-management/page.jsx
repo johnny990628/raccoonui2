@@ -1,6 +1,7 @@
-import ImageList from '@/components/ImageList'
+import DICOMSearch from '@/components/DICOMSearch'
+import DICOMList from '@/components/DICOMList'
 
-const getData = async (page = 1) => {
+const getData = async ({ page = 1, searchQuery }) => {
     'use server'
     const res = await fetch(
         process.env.SERVER_URL +
@@ -9,18 +10,21 @@ const getData = async (page = 1) => {
             new URLSearchParams({
                 limit: 4,
                 page,
-            }).toString()
+                ...searchQuery,
+            })
     )
 
     if (!res.ok) throw new Error('Failed to fetch data')
 
     return res.json()
 }
+
 export default async function ImageManagement() {
-    const dicoms = await getData()
+    const dicoms = await getData({})
     return (
         <div>
-            <ImageList initialDicoms={dicoms} getData={getData} />
+            <DICOMSearch />
+            <DICOMList initialDicoms={dicoms} getData={getData} />
         </div>
     )
 }
