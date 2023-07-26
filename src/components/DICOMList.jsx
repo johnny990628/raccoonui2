@@ -3,9 +3,9 @@ import DICOMCard from '@/components/DICOMCard'
 import { useEffect, useRef, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useSelector } from 'react-redux'
+import { Skeleton } from './ui/skeleton'
 
 export default function ImageList({ initialDicoms, getData }) {
-    const fetching = useRef(false)
     const [pages, setPages] = useState([initialDicoms])
     const [hasMore, setHasMore] = useState(true)
     const [filteredStudies, setFilteredStudies] = useState([])
@@ -29,22 +29,15 @@ export default function ImageList({ initialDicoms, getData }) {
         if (isSearchQuery) {
             fetchQueryData({ searchQuery })
         } else {
-            setFilteredStudies([])
             setError('')
+            setFilteredStudies([])
         }
     }, [searchQuery])
 
     const fetchData = async page => {
-        if (!fetching.current) {
-            try {
-                fetching.current = true
-                const data = await getData({ page })
-                setPages(prev => [...prev, data])
-                setHasMore(data.length > 0)
-            } finally {
-                fetching.current = false
-            }
-        }
+        const data = await getData({ page })
+        setPages(prev => [...prev, data])
+        setHasMore(data.length > 0)
     }
 
     return error ? (
@@ -60,7 +53,7 @@ export default function ImageList({ initialDicoms, getData }) {
             hasMore={hasMore}
             pageStart={1}
             loadMore={fetchData}
-            loader={<span key={0}>Loading ...</span>}
+            loader={<Skeleton className="w-full h-full" />}
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
             {studies.map(study => (

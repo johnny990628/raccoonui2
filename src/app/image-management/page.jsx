@@ -1,7 +1,7 @@
 import DICOMSearch from '@/components/DICOMSearch'
 import DICOMList from '@/components/DICOMList'
 
-const getData = async ({ limit = 3, page = 1, searchQuery }) => {
+const getData = async ({ limit = 4, page = 1, searchQuery }) => {
     'use server'
     const res = await fetch(
         process.env.SERVER_URL +
