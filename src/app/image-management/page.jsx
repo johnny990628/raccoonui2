@@ -1,20 +1,20 @@
 import DICOMSearch from '@/components/DICOMSearch'
 import DICOMList from '@/components/DICOMList'
 
-const getData = async ({ page = 1, searchQuery }) => {
+const getData = async ({ limit = 3, page = 1, searchQuery }) => {
     'use server'
     const res = await fetch(
         process.env.SERVER_URL +
             '/api/dicom' +
             '?' +
             new URLSearchParams({
-                limit: 4,
+                limit,
                 page,
                 ...searchQuery,
             })
     )
 
-    if (!res.ok) throw new Error('Failed to fetch data')
+    if (!res.ok) return []
 
     return res.json()
 }
