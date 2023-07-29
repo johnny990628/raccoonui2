@@ -12,6 +12,8 @@ export async function GET(req, res) {
 
         const searchQuery = { PatientID, PatientName, Modality, Identifier }
 
+        if (!limit || !page) return NextResponse.json({ error: 'limit and page are required' }, { status: 400 })
+
         const studyData = await getStudies(searchQuery)
 
         const filteredData = filterStudies({ studies: studyData, limit, page, searchQuery })
