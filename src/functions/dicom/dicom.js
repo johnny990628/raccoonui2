@@ -161,7 +161,8 @@ export const combineDataWithImage = async data => {
     const result = data.map(item => {
         return {
             ...item,
-            imageURL: `${process.env.IMAGE_URL}?requestType=WADO&studyUID=${item.StudyInstanceUID}&seriesUID=${item.SeriesInstanceUID}&objectUID=${item.SOPInstanceUID}&contentType=image/jpeg`,
+            imageURL: `${process.env.PACS_URL}/${item.StudyInstanceUID}/series/${item.SeriesInstanceUID}/instances/${item.SOPInstanceUID}/frames/1/rendered`,
+            // imageURL: `${process.env.IMAGE_URL}?requestType=WADO&studyUID=${item.StudyInstanceUID}&seriesUID=${item.SeriesInstanceUID}&objectUID=${item.SOPInstanceUID}&contentType=image/jpeg`,
         }
     })
     return result

@@ -1,12 +1,14 @@
-import NextAuth from 'next-auth/next'
+import NextAuth from 'next-auth'
+import KeycloakProvider from 'next-auth/providers/keycloak'
 import jwt_decode from 'jwt-decode'
+import { encrypt } from '../../../../functions/auth/encryption'
 
 export const authOptions = {
     providers: [
         KeycloakProvider({
-            clientId: process.env.KEYCLOAK_CLIENT_ID,
-            clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
-            issuer: process.env.KEYCLOAK_AUTH_ISSUER,
+            clientId: `${process.env.KEYCLOAK_CLIENT_ID}`,
+            clientSecret: `${process.env.KEYCLOAK_CLIENT_SECRET}`,
+            issuer: `${process.env.KEYCLOAK_AUTH_ISSUER}`,
         }),
     ],
     callbacks: {
@@ -27,7 +29,9 @@ export const authOptions = {
             }
         },
         async session({ session, token }) {
-            session.userProp = token.userProp
+            session.access_token = encrypt(token.access_token)
+            session.id_token = encrypt(token.id_token)
+            session.roles = token.decoded.realm_access.roles
             return session
         },
     },

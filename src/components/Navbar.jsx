@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import Image from 'next/image'
-import { buttonVariants } from './ui/button'
+import { Button, buttonVariants } from './ui/button'
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -9,8 +9,18 @@ import {
     NavigationMenuList,
     navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
+import { signIn, signOut, useSession } from 'next-auth/react'
+
+async function keycloakSessionLogOut() {
+    try {
+        await fetch(`/api/auth/logout`, { method: 'GET' })
+    } catch (err) {
+        console.error(err)
+    }
+}
 
 const Navbar = () => {
+    const { data: session, status } = useSession()
     return (
         <div className="fixed top-0 inset-x-0 h-fit z-[10] py-4">
             <div className="container max-w-7xl h-full mx-auto flex item-center justify-between gap-2">
@@ -42,10 +52,21 @@ const Navbar = () => {
                     </NavigationMenu>
                 </div>
                 {/* search bar */}
-
-                <Link href="/sign-in" className={buttonVariants()}>
-                    Sign In
-                </Link>
+                {session ? (
+                    <div className="flex gap-4">
+                        <div className="pt-2">{`${session.user.name}`}</div>
+                        <Button
+                            onClick={() => keycloakSessionLogOut().then(() => signOut({ callbackUrl: '/' }))}
+                            className={buttonVariants({ variant: 'secondary' })}
+                        >
+                            Log Out
+                        </Button>
+                    </div>
+                ) : (
+                    <Button onClick={() => signIn('keycloak')} className={buttonVariants()}>
+                        Sign In
+                    </Button>
+                )}
             </div>
         </div>
     )
