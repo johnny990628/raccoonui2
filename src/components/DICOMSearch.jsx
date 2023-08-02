@@ -66,11 +66,11 @@ export default function DICOMSearch() {
                     />
                     <FormField
                         control={form.control}
-                        name="Identifier"
+                        name="AccessionNumber"
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input placeholder="Identifier" {...field} />
+                                    <Input placeholder="AccessionNumber" {...field} />
                                 </FormControl>
 
                                 <FormMessage />

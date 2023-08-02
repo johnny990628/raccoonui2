@@ -9,8 +9,9 @@ export async function GET(req, res) {
         const PatientName = req.nextUrl.searchParams.get('PatientName') || ''
         const Modality = req.nextUrl.searchParams.get('Modality') || ''
         const Identifier = req.nextUrl.searchParams.get('Identifier') || ''
+        const AccessionNumber = req.nextUrl.searchParams.get('AccessionNumber') || ''
 
-        const searchQuery = { PatientID, PatientName, Modality, Identifier }
+        const searchQuery = { PatientID, PatientName, Modality, Identifier, AccessionNumber }
 
         if (!limit || !page) return NextResponse.json({ error: 'limit and page are required' }, { status: 400 })
 
