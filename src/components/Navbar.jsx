@@ -53,7 +53,7 @@ const Navbar = () => {
                 </div>
                 {/* search bar */}
                 {session ? (
-                    <div className="flex gap-4">
+                    <div className="flex item-center gap-4">
                         <div className="pt-2">{`${session.user.name}`}</div>
                         <Button
                             onClick={() => keycloakSessionLogOut().then(() => signOut({ callbackUrl: '/' }))}
@@ -63,9 +63,9 @@ const Navbar = () => {
                         </Button>
                     </div>
                 ) : (
-                    <Button onClick={() => signIn('keycloak')} className={buttonVariants()}>
+                    <Link href="/sign-in" className={buttonVariants()}>
                         Sign In
-                    </Button>
+                    </Link>
                 )}
             </div>
         </div>

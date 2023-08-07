@@ -34,6 +34,9 @@ export const authOptions = {
             session.roles = token.decoded.realm_access.roles
             return session
         },
+        async redirect({ url, baseUrl }) {
+            return baseUrl
+        },
     },
 }
 
