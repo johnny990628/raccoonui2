@@ -6,9 +6,9 @@ import { encrypt } from '../../../../functions/auth/encryption'
 export const authOptions = {
     providers: [
         KeycloakProvider({
-            clientId: `${process.env.KEYCLOAK_CLIENT_ID}`,
-            clientSecret: `${process.env.KEYCLOAK_CLIENT_SECRET}`,
-            issuer: `${process.env.KEYCLOAK_AUTH_ISSUER}`,
+            clientId: `${process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID}`,
+            clientSecret: `${process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_SECRET}`,
+            issuer: `${process.env.NEXT_PUBLIC_KEYCLOAK_AUTH_ISSUER}`,
         }),
     ],
     callbacks: {

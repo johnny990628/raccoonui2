@@ -4,11 +4,31 @@ import { Button } from '@/components/ui/Button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
 import { Input } from './ui/input'
 import { useForm } from 'react-hook-form'
+import { registerUser } from '@/functions/auth/registration'
+import { getAccessTokenForRegistration } from '@/functions/auth/token'
 
 const SignUpForm = ({ className, ...props }) => {
     const form = useForm()
     async function onSubmit(values) {
-        console.log(values)
+        const accessToken = await getAccessTokenForRegistration()
+        const userData = {
+            username: values.username,
+            email: values.email,
+            enabled: true,
+            credentials: [
+                {
+                    type: 'password',
+                    value: values.password,
+                },
+            ],
+        }
+        const response = await registerUser({ accessToken, userData })
+        if (response.ok) {
+            console.log('User registration successful.')
+        } else {
+            const errorData = await response.json()
+            console.error('Error registering the user:', errorData)
+        }
     }
 
     return (
