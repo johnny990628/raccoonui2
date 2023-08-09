@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar'
 import { Providers } from '@/redux/Provider'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import NextAuthProvider from '@/components/NextAuthProvider'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children, authModal, session }) {
                             <Navbar />
                             {authModal}
                             <div className="container max-w-7xl mx-auto h-full pt-14">{children}</div>
+                            <Toaster />
                         </ThemeProvider>
                     </Providers>
                 </NextAuthProvider>

@@ -10,6 +10,8 @@ import {
     navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
+import { cn } from '../lib/utils'
 
 async function keycloakSessionLogOut() {
     try {
@@ -21,6 +23,8 @@ async function keycloakSessionLogOut() {
 
 const Navbar = () => {
     const { data: session, status } = useSession()
+    const pathname = usePathname()
+
     return (
         <div className="fixed top-0 inset-x-0 h-fit z-[10] py-4">
             <div className="container max-w-7xl h-full mx-auto flex item-center justify-between gap-2">
@@ -40,12 +44,20 @@ const Navbar = () => {
                         <NavigationMenuList>
                             <NavigationMenuItem>
                                 <Link href="/image-management" legacyBehavior passHref>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>Image Management</NavigationMenuLink>
+                                    <NavigationMenuLink
+                                        className={cn(navigationMenuTriggerStyle(), pathname === '/image-management' && 'bg-accent')}
+                                    >
+                                        Image Management
+                                    </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                             <NavigationMenuItem>
                                 <Link href="/ae-title" legacyBehavior passHref>
-                                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>AE Title</NavigationMenuLink>
+                                    <NavigationMenuLink
+                                        className={cn(navigationMenuTriggerStyle(), pathname === '/ae-title' && 'bg-accent')}
+                                    >
+                                        AE Title
+                                    </NavigationMenuLink>
                                 </Link>
                             </NavigationMenuItem>
                         </NavigationMenuList>

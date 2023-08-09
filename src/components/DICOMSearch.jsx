@@ -6,6 +6,7 @@ import { Input } from './ui/input'
 import { useDispatch } from 'react-redux'
 import { updateSearchQuery } from '@/redux/slices/DicomSearch'
 import { useDebouncedCallback } from 'use-debounce'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 export default function DICOMSearch() {
     const form = useForm()
@@ -30,6 +31,8 @@ export default function DICOMSearch() {
                         name="PatientID"
                         render={({ field }) => (
                             <FormItem>
+                                
+                                {/* <AiOutlineSearch /> */}
                                 <FormControl>
                                     <Input placeholder="PatientID" {...field} />
                                 </FormControl>

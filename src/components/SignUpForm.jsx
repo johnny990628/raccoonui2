@@ -6,9 +6,13 @@ import { Input } from './ui/input'
 import { useForm } from 'react-hook-form'
 import { registerUser } from '@/functions/auth/registration'
 import { getAccessTokenForRegistration } from '@/functions/auth/token'
+import { useToast } from './ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 const SignUpForm = ({ className, ...props }) => {
     const form = useForm()
+    const { toast } = useToast()
+    const { push } = useRouter()
     async function onSubmit(values) {
         const accessToken = await getAccessTokenForRegistration()
         const userData = {
@@ -24,10 +28,11 @@ const SignUpForm = ({ className, ...props }) => {
         }
         const response = await registerUser({ accessToken, userData })
         if (response.ok) {
-            console.log('User registration successful.')
+            toast({ title: 'Success', description: 'User registration successful.' })
+            push('/sign-in')
         } else {
             const errorData = await response.json()
-            console.error('Error registering the user:', errorData)
+            toast({ title: 'Error', description: 'Error registering the user:' + errorData })
         }
     }
 
